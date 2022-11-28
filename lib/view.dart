@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends BlocState<MyHomePage, AllLeaguesBloc> {
   int counter = 0;
+  bool isChanged = false;
 
   @override
   void dispose() {
@@ -33,6 +34,16 @@ class _MyHomePageState extends BlocState<MyHomePage, AllLeaguesBloc> {
             const Text(
               'You have pushed the button this many times:',
             ),
+            StreamBuilder<bool>(
+                stream: bloc.getChangedResponse,
+                builder: (context, snapshot) {
+                  final isdatachanged = snapshot.data;
+                  return Container(
+                    color: isdatachanged ?? false ? Colors.amber : Colors.red,
+                    width: 200,
+                    height: 200,
+                  );
+                }),
             StreamBuilder<int>(
                 initialData: 0,
                 stream: bloc.getResponse,
@@ -46,12 +57,24 @@ class _MyHomePageState extends BlocState<MyHomePage, AllLeaguesBloc> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bloc.addResponse(counter++);
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              bloc.addResponse(counter++);
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              bloc.addChangeResponse(isChanged = !isChanged);
+            },
+            tooltip: 'isChanged',
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
