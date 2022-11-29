@@ -23,10 +23,14 @@ class APIManager {
 
   HttpClient httpClient = HttpClient();
 
+  /// it must be map
+  /// because of incorrect api i had to change map to dynamic
+
   /// GET REQUEST
-  Future<Map<String, dynamic>> getAPICall({
+  Future<dynamic> getAPICall({
     required Uri url,
     required bool needAuth,
+    Map<String, dynamic>? queryParameters,
 
     /// Поставить true, если в запросе уже имеются параметры. По умолчанию false
     bool hasQuery = false,
@@ -34,10 +38,10 @@ class APIManager {
     int retryCounter = 3;
 
     /// Add locale to query parameters
-    final locale = LocaleService.locale();
+    //final locale = LocaleService.locale();
 
     if (!hasQuery) {
-      url = url.resolveUri(Uri(queryParameters: {'locale': locale}));
+      url = url.resolveUri(Uri(queryParameters: queryParameters));
     }
 
     log("⚙️ \x1B[35mCalling get API: $url", name: 'REQUEST');
@@ -50,7 +54,7 @@ class APIManager {
       throw LocalAuthenificationException();
     }
 
-    Map<String, dynamic> responseJson;
+    dynamic responseJson;
     try {
       final response = await _client
           .get(
@@ -116,11 +120,10 @@ class APIManager {
         : await _headersService.getUnauthHeaders();
   }
 
-  Map<String, dynamic> _response(http.Response response) {
+  _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        Map<String, dynamic> responseJson =
-            json.decode(response.body.toString());
+        final responseJson = json.decode(response.body.toString());
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());

@@ -1,6 +1,10 @@
-# rxdart_pattern
+# Search university
 
 
+## Project where you can watch all universities of country
+### data handler - http
+### state management - flutter bloc
+### DI - get_it
 
-## Sample counter app with rx_dart and mvvm pattern :collision:
+
 

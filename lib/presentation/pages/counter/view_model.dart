@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart_pattern/base_bloc.dart';
+import 'package:rxdart_pattern/presentation/core/base_bloc.dart';
 
 abstract class AllLeaguesBloc extends BaseBloc {
   factory AllLeaguesBloc() => _AllLeaguesBloc();

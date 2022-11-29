@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rxdart_pattern/injection.dart';
-import 'package:rxdart_pattern/view.dart';
+import 'package:rxdart_pattern/presentation/pages/univercity/bloc/cubit/get_univercity_cubit.dart';
+import 'package:rxdart_pattern/presentation/pages/univercity/bloc/validation_bloc.dart';
+import 'package:rxdart_pattern/presentation/pages/univercity/view/first_screen.dart';
 
 void main() {
   final sl = GetIt.I;
@@ -14,12 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GetUnivercityCubit>(
+          create: (context) => GetIt.I.get<GetUnivercityCubit>(),
+        ),
+        BlocProvider<ValidationBloc>(create: (context) => ValidationBloc(''))
+      ],
+      child: MaterialApp(
+        title: 'Search Univercities',
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.dark(),
+        home: const FirstPage(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

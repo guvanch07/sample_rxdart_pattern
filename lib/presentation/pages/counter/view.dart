@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart_pattern/base_bloc.dart';
-import 'package:rxdart_pattern/view_model.dart';
+import 'package:rxdart_pattern/presentation/core/base_bloc.dart';
+import 'package:rxdart_pattern/presentation/pages/counter/view_model.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
